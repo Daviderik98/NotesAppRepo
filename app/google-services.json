@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "815209943610",
+    "project_id": "database-pandanotes",
+    "storage_bucket": "database-pandanotes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815209943610:android:75f54d20c104866bf29b03",
+        "android_client_info": {
+          "package_name": "com.example.notesapp_pandas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815209943610-t7gf94b1fh2co8gpljdug2veupasd9pa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO66QDFLkfEjCngdI8hkYD8tXa4HOnrh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815209943610-t7gf94b1fh2co8gpljdug2veupasd9pa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
