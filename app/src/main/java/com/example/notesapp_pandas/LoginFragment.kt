@@ -39,38 +39,41 @@ class LoginFragment : Fragment() {
             var inputUsername = enteredName.text.toString()
             var inputPassword = enteredPass.text.toString()
 
+            if(inputUsername.isNotEmpty() && inputPassword.isNotEmpty()){
+                db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
+                    ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()){
 
-            db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
-                ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()){
+                            for (userSnapshot in snapshot.children){
 
-                        for (userSnapshot in snapshot.children){
+                                val user = userSnapshot.getValue(User::class.java)
 
-                            val user = userSnapshot.getValue(User::class.java)
-
-                            if (user != null && user.password == inputPassword){
-                                val currentUser = userSnapshot.key?.let {
-                                        it1->
-                                    User(
-                                        username = user.username,
-                                        password=user.password,
-                                        userId = it1
-                                    )
-                                    //todo : viewmodel for fething the current user
+                                if (user != null && user.password == inputPassword){
+                                    val currentUser = userSnapshot.key?.let {
+                                            it1->
+                                        User(
+                                            username = user.username,
+                                            password=user.password,
+                                            userId = it1
+                                        )
+                                        //todo : viewmodel for fething the current user
+                                    }
                                 }
                             }
+
                         }
-
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(activity, "BIG TIME ERROR", Toast.LENGTH_SHORT).show()
-                }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(activity, "BIG TIME ERROR", Toast.LENGTH_SHORT).show()
+                    }
 
-            })
-
+                })
+            }
+            else{
+                Toast.makeText(activity, "Both fields have to be filled", Toast.LENGTH_SHORT).show()
+            }
     }
 
         btnRegister.setOnClickListener{
