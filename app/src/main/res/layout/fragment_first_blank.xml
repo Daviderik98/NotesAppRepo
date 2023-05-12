@@ -47,7 +47,7 @@
             android:paddingHorizontal="60sp"
 
 
-            android:text="Welcome to PANDAS NOTES"
+            android:text="Welcome to Quire App"
             android:textAlignment="center"
             android:textSize="55sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:textColor="#0073FF"
             android:text="Need an account? Click here"
             app:layout_constraintBottom_toTopOf="@+id/btn_signIn"
             app:layout_constraintEnd_toEndOf="@+id/btn_signIn"
