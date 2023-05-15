@@ -1,5 +1,6 @@
 package com.example.notesapp_pandas
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,8 +37,8 @@ class LoginFragment : Fragment() {
         val btnRegister = binding.toSignUp
 
         btnSubmit.setOnClickListener{
-            var inputUsername = enteredName.text.toString()
-            var inputPassword = enteredPass.text.toString()
+            val inputUsername = enteredName.text.toString()
+            val inputPassword = enteredPass.text.toString()
 
 
             db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
@@ -69,7 +70,12 @@ class LoginFragment : Fragment() {
                     Toast.makeText(activity, "BIG TIME ERROR", Toast.LENGTH_SHORT).show()
                 }
 
-            })
+            }) // TODO navigate to ListviewFragment from K & M
+           // Navigation.findNavController(loginView).navigate(R.id.action_loginFragment_to_listviewFragment2)
+
+            // TODO Navigate to ListActivity from K & M
+            val intentNavigate =  Intent(activity, ListActivity::class.java)
+            startActivity(intentNavigate)
 
     }
 
