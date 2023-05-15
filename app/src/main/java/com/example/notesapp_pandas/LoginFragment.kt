@@ -1,5 +1,6 @@
 package com.example.notesapp_pandas
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class LoginFragment : Fragment() {
         val btnSubmit = binding.submission
         val btnRegister = binding.toSignUp
 
+
+
         btnSubmit.setOnClickListener{
             var inputUsername = enteredName.text.toString()
             var inputPassword = enteredPass.text.toString()
@@ -61,7 +64,11 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                             }
-
+                            val fromLogToList = Intent(activity, ListActivity::class.java)
+                            startActivity(fromLogToList)
+                        }
+                        else{
+                            Toast.makeText(activity, "This user doesnt exist", Toast.LENGTH_SHORT).show()
                         }
                     }
 
