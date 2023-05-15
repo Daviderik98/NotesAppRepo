@@ -66,13 +66,13 @@ class LoginFragment : Fragment() {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(activity, "BIG TIME ERROR", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "ERROR 404 NOT FOUND", Toast.LENGTH_SHORT).show()
                     }
 
                 })
             }
             else{
-                Toast.makeText(activity, "Both fields have to be filled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "YOU MUST FILL IN BOTH FIELDS PR BABA YAGA WILL FIND YOU", Toast.LENGTH_SHORT).show()
             }
     }
 
