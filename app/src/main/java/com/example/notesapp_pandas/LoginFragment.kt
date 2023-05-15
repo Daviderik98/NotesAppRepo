@@ -76,6 +76,7 @@ class LoginFragment : Fragment() {
             // TODO Navigate to ListActivity from K & M
             val intentNavigate =  Intent(activity, ListActivity::class.java)
             startActivity(intentNavigate)
+            //nothing important
 
     }
 
