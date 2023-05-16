@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
                                         password=user.password,
                                         userId = it1
                                     )
-                                    //todo : viewmodel for fething the current user
+
                                 }
                             }
                         }
@@ -71,7 +71,7 @@ class LoginFragment : Fragment() {
                 }
 
             }) // TODO navigate to ListviewFragment from K & M
-           // Navigation.findNavController(loginView).navigate(R.id.action_loginFragment_to_listviewFragment2)
+
 
             // TODO Navigate to ListActivity from K & M
             val intentNavigate =  Intent(activity, ListActivity::class.java)
