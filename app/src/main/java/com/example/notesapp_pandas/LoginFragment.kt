@@ -39,8 +39,29 @@ class LoginFragment : Fragment() {
 
 
         btnSubmit.setOnClickListener{
-            var inputUsername = enteredName.text.toString()
-            var inputPassword = enteredPass.text.toString()
+            val inputUsername = enteredName.text.toString()
+            val inputPassword = enteredPass.text.toString()
+
+
+
+            db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+
+                        for (userSnapshot in snapshot.children){
+
+                            val user = userSnapshot.getValue(User::class.java)
+
+                            if (user != null && user.password == inputPassword){
+                                val currentUser = userSnapshot.key?.let {
+                                        it1->
+                                    User(
+                                        username = user.username,
+                                        password=user.password,
+                                        userId = it1
+                                    )
+
 
             if(inputUsername.isNotEmpty() && inputPassword.isNotEmpty()){
                 db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
@@ -62,6 +83,7 @@ class LoginFragment : Fragment() {
                                         )
                                         //todo : viewmodel for fething the current user
                                     }
+
                                 }
                             }
                             val fromLogToList = Intent(activity, ListActivity::class.java)
@@ -72,9 +94,20 @@ class LoginFragment : Fragment() {
                         }
                     }
 
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(activity, "BIG TIME ERROR", Toast.LENGTH_SHORT).show()
+                }
+
+            }) // TODO navigate to ListviewFragment from K & M
+
+
+           
+=======
                     override fun onCancelled(error: DatabaseError) {
                         Toast.makeText(activity, "ERROR 404 NOT FOUND", Toast.LENGTH_SHORT).show()
                     }
+
 
                 })
             }
