@@ -54,8 +54,15 @@
             android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_marginTop="8dp"
             android:text="Need an account? Click here"
+
+            android:layout_marginBottom="48dp"
+            android:text="Need an account? Click here"
+            android:textColor="#0073FF"
+            app:layout_constraintBottom_toTopOf="@+id/btn_signIn"
+
             app:layout_constraintEnd_toEndOf="@+id/btn_signIn"
             app:layout_constraintStart_toStartOf="@+id/btn_signIn"
             app:layout_constraintTop_toBottomOf="@+id/btn_signIn" />

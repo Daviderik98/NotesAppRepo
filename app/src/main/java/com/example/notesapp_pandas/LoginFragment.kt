@@ -36,9 +36,12 @@ class LoginFragment : Fragment() {
         val btnSubmit = binding.submission
         val btnRegister = binding.toSignUp
 
+
+
         btnSubmit.setOnClickListener{
             val inputUsername = enteredName.text.toString()
             val inputPassword = enteredPass.text.toString()
+
 
 
             db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
@@ -59,12 +62,38 @@ class LoginFragment : Fragment() {
                                         userId = it1
                                     )
 
+
+            if(inputUsername.isNotEmpty() && inputPassword.isNotEmpty()){
+                db.orderByChild("username").equalTo(inputUsername).addListenerForSingleValueEvent(object :
+                    ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()){
+
+                            for (userSnapshot in snapshot.children){
+
+                                val user = userSnapshot.getValue(User::class.java)
+
+                                if (user != null && user.password == inputPassword){
+                                    val currentUser = userSnapshot.key?.let {
+                                            it1->
+                                        User(
+                                            username = user.username,
+                                            password=user.password,
+                                            userId = it1
+                                        )
+                                        //todo : viewmodel for fething the current user
+                                    }
+
                                 }
                             }
+                            val fromLogToList = Intent(activity, ListActivity::class.java)
+                            startActivity(fromLogToList)
                         }
-
+                        else{
+                            Toast.makeText(activity, "This user doesnt exist", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
+
 
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(activity, "BIG TIME ERROR", Toast.LENGTH_SHORT).show()
@@ -73,11 +102,18 @@ class LoginFragment : Fragment() {
             }) // TODO navigate to ListviewFragment from K & M
 
 
-            // TODO Navigate to ListActivity from K & M
-            val intentNavigate =  Intent(activity, ListActivity::class.java)
-            startActivity(intentNavigate)
-            //nothing important
+           
+=======
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(activity, "ERROR 404 NOT FOUND", Toast.LENGTH_SHORT).show()
+                    }
 
+
+                })
+            }
+            else{
+                Toast.makeText(activity, "YOU MUST FILL IN BOTH FIELDS PR BABA YAGA WILL FIND YOU", Toast.LENGTH_SHORT).show()
+            }
     }
 
         btnRegister.setOnClickListener{
