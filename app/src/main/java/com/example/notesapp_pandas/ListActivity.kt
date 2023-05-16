@@ -90,7 +90,7 @@ class ListActivity : AppCompatActivity() {
             }
         })
         colorPickerDialog.show()
-        //Need to be here
+
     }
 }
 
