@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/desk_arrangement_with_empty_notepad_blue_background"
     tools:context=".LoginFragment">
 
 
@@ -38,8 +39,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/black"
-        android:textColor="#ff0"
+        android:backgroundTint="#DCA70B"
+        android:textColor="#FFFFFF"
         android:text="Submit"
         app:layout_constraintEnd_toEndOf="@+id/editTextEnterPass"
         app:layout_constraintHorizontal_bias="0.491"
@@ -50,8 +51,8 @@
         android:id="@+id/toSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:backgroundTint="#070FA3"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#36953A"
         android:text="New Account"
         android:textColor="#ff0"
         android:textSize="13sp"
