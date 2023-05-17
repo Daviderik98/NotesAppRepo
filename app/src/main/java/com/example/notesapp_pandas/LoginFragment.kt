@@ -64,8 +64,7 @@ class LoginFragment : Fragment() {
                                     }
                                 }
                             }
-                            val fromLogToList = Intent(activity, ListActivity::class.java)
-                            startActivity(fromLogToList)
+                            Navigation.findNavController(loginView).navigate(R.id.action_loginFragment_to_listviewFragment)
                         }
                         else{
                             Toast.makeText(activity, "This user doesnt exist", Toast.LENGTH_SHORT).show()

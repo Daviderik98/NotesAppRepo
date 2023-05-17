@@ -33,7 +33,11 @@
         android:id="@+id/registerFragment"
         android:name="com.example.notesapp_pandas.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_listviewFragment"
+            app:destination="@id/listviewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.notesapp_pandas.LoginFragment"
@@ -42,5 +46,13 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_listviewFragment"
+            app:destination="@id/listviewFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/listviewFragment"
+        android:name="com.example.notesapp_pandas.ListviewFragment"
+        android:label="fragment_listview"
+        tools:layout="@layout/fragment_listview" />
 </navigation>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import com.example.notesapp_pandas.databinding.FragmentRegisterBinding
 //import com.google.firebase.database.*
 import com.google.firebase.database.DataSnapshot
@@ -50,6 +51,7 @@ private val binding get()= _binding!!
                             val newUser = newUserId?.let{User(userName, passWord, newUserId)}
                             db.child(newUserId!!).setValue(newUser).addOnSuccessListener {
                                 Toast.makeText(activity, "New User Registered", Toast.LENGTH_SHORT).show()
+                                Navigation.findNavController(registerView).navigate(R.id.action_registerFragment_to_listviewFragment)
                             }.addOnFailureListener{
                                 Toast.makeText(activity, "Failed to Register User", Toast.LENGTH_SHORT)
                             }
