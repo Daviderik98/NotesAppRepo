@@ -4,35 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/desk_arrangement_with_empty_notepad_blue_background"
     tools:context=".LoginFragment">
 
 
     <EditText
         android:id="@+id/editTextEnterUser"
-        android:layout_width="191dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginBottom="440dp"
-        android:backgroundTint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Name"
-        android:padding="10sp"
+        android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_loginPage"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="@+id/tv_loginPage"
-        app:layout_constraintTop_toBottomOf="@+id/tv_loginPage" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.364" />
 
     <EditText
         android:id="@+id/editTextEnterPass"
-        android:layout_width="191dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="Password"
-        android:padding="10sp"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/editTextEnterUser"
         app:layout_constraintHorizontal_bias="0.0"
@@ -44,8 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:backgroundTint="@color/black"
+        android:textColor="#ff0"
         android:text="Submit"
-        android:backgroundTint="#EDC13D"
         app:layout_constraintEnd_toEndOf="@+id/editTextEnterPass"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="@+id/editTextEnterPass"
@@ -55,25 +50,13 @@
         android:id="@+id/toSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#070FA3"
         android:text="New Account"
         android:textColor="#ff0"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@+id/submission"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="@+id/submission"
         app:layout_constraintTop_toBottomOf="@+id/submission" />
-
-    <TextView
-        android:id="@+id/tv_loginPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.191" />
 </androidx.constraintlayout.widget.ConstraintLayout>
