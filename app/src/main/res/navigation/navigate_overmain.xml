@@ -54,5 +54,18 @@
         android:id="@+id/listviewFragment"
         android:name="com.example.notesapp_pandas.ListviewFragment"
         android:label="fragment_listview"
-        tools:layout="@layout/fragment_listview" />
+        tools:layout="@layout/fragment_listview" >
+        <action
+            android:id="@+id/action_listviewFragment_to_searchNotesFragment"
+            app:destination="@id/searchNotesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchNotesFragment"
+        android:name="com.example.notesapp_pandas.SearchNotesFragment"
+        android:label="fragment_search_notes"
+        tools:layout="@layout/fragment_search_notes" >
+        <action
+            android:id="@+id/action_searchNotesFragment_to_listviewFragment"
+            app:destination="@id/listviewFragment" />
+    </fragment>
 </navigation>

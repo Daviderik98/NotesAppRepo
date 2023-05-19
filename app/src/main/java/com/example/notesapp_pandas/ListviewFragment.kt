@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 
 import com.example.notesapp_pandas.databinding.FragmentFirstBlankBinding
 import com.example.notesapp_pandas.databinding.FragmentListviewBinding
@@ -139,7 +141,35 @@ class ListviewFragment : Fragment() {
 // titleInput.text.clear()
 // notesInput.text.clear()
 
-            }}
+            }
+            notesListView.setOnItemLongClickListener { parent, view, position, id ->
+                val item = parent.getItemAtPosition(position) as String
+                val dialogBuilder = AlertDialog.Builder(requireContext())
+                dialogBuilder.setMessage("Are you sure you want to delete this note")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") {_, _ ->
+                        notesList.removeAt(position)
+                        notesAdapter.notifyDataSetChanged()
+
+                    }
+                    .setNegativeButton("No"){dialog, _ ->
+                        dialog.cancel()
+                    }
+                val alert = dialogBuilder.create()
+                alert.setTitle("Delete note")
+                alert.show()
+                true
+
+
+            }
+            // TODO navigate to SearchNotesFragment K & M
+            notesListView.setOnItemClickListener { parent, view, position, id->
+                val item = parent.getItemAtPosition(position) as String
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_listviewFragment_to_searchNotesFragment)
+
+            }
+        }
         imageButton.setOnClickListener {
             val currentTextSize = sizePicker.value.toFloat()
             titleInput.textSize = currentTextSize
