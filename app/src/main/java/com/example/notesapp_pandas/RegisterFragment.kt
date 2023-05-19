@@ -17,8 +17,8 @@ import com.google.firebase.database.ValueEventListener
 
 
 class RegisterFragment : Fragment() {
-private var _binding: FragmentRegisterBinding? = null
-private val binding get()= _binding!!
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get()= _binding!!
     private lateinit var db: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,10 @@ private val binding get()= _binding!!
                         }
                         else{
                             val newUserId = db.push().key
-                            val newUser = newUserId?.let{User(userName, passWord, newUserId)}
+                            val newUserNotesMap = mutableMapOf<String, UserNotes>()
+                            val newUser = newUserId?.let{User(userName, passWord, newUserId,
+                                newUserNotesMap
+                            )}
                             db.child(newUserId!!).setValue(newUser).addOnSuccessListener {
                                 Toast.makeText(activity, "New User Registered", Toast.LENGTH_SHORT).show()
                                 Navigation.findNavController(registerView).navigate(R.id.action_registerFragment_to_listviewFragment)

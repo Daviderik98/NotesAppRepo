@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import yuku.ambilwarna.AmbilWarnaDialog
 import android.widget.*
+import androidx.fragment.app.activityViewModels
 
 import com.example.notesapp_pandas.databinding.FragmentFirstBlankBinding
 import com.example.notesapp_pandas.databinding.FragmentListviewBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import yuku.ambilwarna.AmbilWarnaDialog
 
 
 class ListviewFragment : Fragment() {
@@ -26,8 +29,13 @@ class ListviewFragment : Fragment() {
     private lateinit var imageButton: ImageView
     private lateinit var sizePicker: NumberPicker
 
-    private var _binding: FragmentListviewBinding?= null
+    private val db: DatabaseReference =
+        FirebaseDatabase.getInstance("https://database-pandanotes-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("Users")
+
+    private var _binding: FragmentListviewBinding? = null
     private val binding get() = _binding!!
+    val userViewModel: UserViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +53,7 @@ class ListviewFragment : Fragment() {
         textColorList = mutableListOf()
         notesListView = binding.notesList
         notesInput = binding.notesInput
-        saveButton  = binding.saveButton
+        saveButton = binding.saveButton
         titleInput = binding.titlesInput
         imageButton = binding.imgSetTextsize
         sizePicker = binding.numberPicker
@@ -76,51 +84,91 @@ class ListviewFragment : Fragment() {
             }
         }
 
+
         notesListView.adapter = notesAdapter
 
         saveButton.setOnClickListener {
-            val newNoteCard = titleInput.text.toString() + "\n" + notesInput.text.toString()
-            if (newNoteCard.isNotEmpty()) {
-                notesList.add(newNoteCard)
-                val textSize = sizePicker.value.toFloat()
-                val textColor = titleInput.currentTextColor
-                textSizeList.add(textSize)
-                textColorList.add(textColor)
-                notesAdapter.notifyDataSetChanged()
-                titleInput.text.clear()
-                notesInput.text.clear()
+
+
+
+
+
+            val currentUser = userViewModel.currentUser.value
+            if (currentUser == null) {
+                Toast.makeText(activity, "No current user", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-        }
 
+            val titlesInput = titleInput.text.toString()
+            val bloggInput = notesInput.text.toString()
+
+
+
+            if (titlesInput.isNotEmpty()&& bloggInput.isNotEmpty()){
+                val uniqueId: String? = currentUser?.let { it1 -> db.child(it1.userId).child("anteckningar").push().key }
+                    ?: ""
+
+                val newObj = uniqueId?.let { it1 -> UserNotes(title = titlesInput, blogg = bloggInput, uniqueID = it1) }
+
+                if (currentUser != null) {
+                    if (uniqueId != null) {
+                        db.child(currentUser.userId).child("anteckningar").child(uniqueId).setValue(newObj).addOnCompleteListener{task ->
+                            if (task.isSuccessful){
+                                //notesList[uniqueId] = newObj.toString()
+                                //notesAdapter.clear()
+                                Toast.makeText(activity,"Notes saved",Toast.LENGTH_SHORT).show()
+
+                            }else{
+                                Toast.makeText(activity,"failed to save!",Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+                        val noteDisplayText = "$titlesInput - $bloggInput"
+                        notesList.add(noteDisplayText)
+                        val textSize = sizePicker.value.toFloat()
+                        val textColor = titleInput.currentTextColor
+                        textSizeList.add(textSize)
+                        textColorList.add(textColor)
+                        notesAdapter.notifyDataSetChanged()
+                    }
+                }
+                //notesList.add(titleInput)
+                // notesList.add(bloggInput)
+                // notesAdapter.notifyDataSetChanged()
+
+// titleInput.text.clear()
+// notesInput.text.clear()
+
+            }}
+        imageButton.setOnClickListener {
+            val currentTextSize = sizePicker.value.toFloat()
+            titleInput.textSize = currentTextSize
+            notesInput.textSize = currentTextSize
+        }
         val editBtn = binding.imageEditcolor
-
-        editBtn.setOnClickListener() {
+        editBtn.setOnClickListener {
             changeColor(listView)
-        }
-
-        imageButton.setOnClickListener{
-            val textSize = sizePicker.value.toFloat()
-            titleInput.textSize = textSize
-            notesInput.textSize = textSize
         }
         // Inflate the layout for this fragment
         return listView
     }
-
-    private fun changeColor(view: View) {
+    fun changeColor(view: View) {
         val initialColor = titleInput.currentTextColor
 
-        val colorPickerDialog = AmbilWarnaDialog(requireContext(), initialColor, object : AmbilWarnaDialog.OnAmbilWarnaListener {
-            override fun onCancel(dialog: AmbilWarnaDialog?) {
-                // Handle dialog cancellation
-            }
 
-            override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                titleInput.setTextColor(color)
-                notesInput.setTextColor(color)
-            }
-        })
+        val colorPickerDialog = AmbilWarnaDialog(
+            requireContext(),
+            initialColor,
+            object : AmbilWarnaDialog.OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog?) {
+                    //Handle dialog cancellation
+                }
+
+                override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
+                    titleInput.setTextColor(color)
+                    notesInput.setTextColor(color)
+                }
+            })
         colorPickerDialog.show()
     }
-
 }
