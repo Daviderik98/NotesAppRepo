@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+
 class UserViewModel: ViewModel() {
     //current user
     private val _currentUser = MutableStateFlow<User?>(null)
@@ -52,3 +53,8 @@ class UserViewModel: ViewModel() {
         }
     }
 }
+
+
+
+
+

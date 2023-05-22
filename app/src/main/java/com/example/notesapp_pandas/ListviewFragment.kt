@@ -1,15 +1,17 @@
 package com.example.notesapp_pandas
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 
 import com.example.notesapp_pandas.databinding.FragmentFirstBlankBinding
 import com.example.notesapp_pandas.databinding.FragmentListviewBinding
@@ -119,7 +121,7 @@ class ListviewFragment : Fragment() {
                                 //notesList[uniqueId] = newObj.toString()
                                 //notesAdapter.clear()
                                 Toast.makeText(activity,"Notes saved",Toast.LENGTH_SHORT).show()
-                                fetchUserNotesFromFirebase()
+
                             }else{
                                 Toast.makeText(activity,"failed to save!",Toast.LENGTH_SHORT).show()
                             }
@@ -141,7 +143,35 @@ class ListviewFragment : Fragment() {
 // titleInput.text.clear()
 // notesInput.text.clear()
 
-            }}
+            }
+            notesListView.setOnItemLongClickListener { parent, view, position, id ->
+                val item = parent.getItemAtPosition(position) as String
+                val dialogBuilder = AlertDialog.Builder(requireContext())
+                dialogBuilder.setMessage("Are you sure you want to delete this note")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") {_, _ ->
+                        notesList.removeAt(position)
+                        notesAdapter.notifyDataSetChanged()
+
+                    }
+                    .setNegativeButton("No"){dialog, _ ->
+                        dialog.cancel()
+                    }
+                val alert = dialogBuilder.create()
+                alert.setTitle("Delete note")
+                alert.show()
+                true
+
+
+            }
+            // TODO navigate to SearchNotesFragment K & M
+            notesListView.setOnItemClickListener { parent, view, position, id->
+                val item = parent.getItemAtPosition(position) as String
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_listviewFragment_to_searchNotesFragment)
+
+            }
+        }
         imageButton.setOnClickListener {
             val currentTextSize = sizePicker.value.toFloat()
             titleInput.textSize = currentTextSize
@@ -154,6 +184,11 @@ class ListviewFragment : Fragment() {
         // Inflate the layout for this fragment
         return listView
     }
+
+
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -186,6 +221,8 @@ class ListviewFragment : Fragment() {
 
     }
 
+
+
     fun changeColor(view: View) {
         val initialColor = titleInput.currentTextColor
 
@@ -205,6 +242,11 @@ class ListviewFragment : Fragment() {
             })
         colorPickerDialog.show()
     }
+
+
+
+
+
     private fun updateListView(notes: List<UserNotes>) {
         // Clear previous data
         notesList.clear()
@@ -227,4 +269,7 @@ class ListviewFragment : Fragment() {
         // Notify the adapter that the data has changed
         notesAdapter.notifyDataSetChanged()
     }
+
+
+
 }

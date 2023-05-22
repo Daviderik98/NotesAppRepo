@@ -54,7 +54,7 @@ class RegisterFragment : Fragment() {
                             )}
                             db.child(newUserId!!).setValue(newUser).addOnSuccessListener {
                                 Toast.makeText(activity, "New User Registered", Toast.LENGTH_SHORT).show()
-                                Navigation.findNavController(registerView).navigate(R.id.action_registerFragment_to_listviewFragment)
+                                Navigation.findNavController(registerView).navigate(R.id.action_registerFragment_to_loginFragment)
                             }.addOnFailureListener{
                                 Toast.makeText(activity, "Failed to Register User", Toast.LENGTH_SHORT)
                             }
