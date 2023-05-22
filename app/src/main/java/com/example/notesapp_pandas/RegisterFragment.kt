@@ -36,6 +36,11 @@ class RegisterFragment : Fragment() {
         val enterName = binding.editTextUserName
         val enterPass = binding.editTextPassword
         val submit = binding.btnToSignIn
+        val goBack = binding.imgBackarrow3
+
+        goBack.setOnClickListener{
+            Navigation.findNavController(registerView).navigate(R.id.action_registerFragment_to_firstBlankFragment)
+        }
 
         submit.setOnClickListener{
             val userName = enterName.text.toString()

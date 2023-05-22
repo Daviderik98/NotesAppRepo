@@ -37,8 +37,12 @@ class LoginFragment : Fragment() {
         val enteredPass = binding.editTextEnterPass
         val btnSubmit = binding.submission
         val btnRegister = binding.toSignUp
+        val btnBack = binding.imgBackarrow2
 
 
+        btnBack.setOnClickListener{
+            Navigation.findNavController(loginView).navigate(R.id.action_loginFragment_to_firstBlankFragment)
+        }
 
         btnSubmit.setOnClickListener{
             var inputUsername = enteredName.text.toString()
