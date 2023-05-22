@@ -10,25 +10,28 @@
 
     <EditText
         android:id="@+id/editTextEnterUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="187dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:padding="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.364" />
 
     <EditText
         android:id="@+id/editTextEnterPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_width="185dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="Password"
         android:inputType="textPassword"
+        android:padding="10sp"
         app:layout_constraintEnd_toEndOf="@+id/editTextEnterUser"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editTextEnterUser"
@@ -41,7 +44,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#DCA70B"
         android:textColor="#FFFFFF"
-        android:text="Submit"
+        android:text="Log In"
         app:layout_constraintEnd_toEndOf="@+id/editTextEnterPass"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="@+id/editTextEnterPass"
@@ -60,4 +63,34 @@
         app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="@+id/submission"
         app:layout_constraintTop_toBottomOf="@+id/submission" />
+
+    <TextView
+        android:id="@+id/tvSeven"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textAlignment="center"
+        android:text="Enter your username and password"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.221" />
+    <ImageButton
+        android:id="@+id/img_Backarrow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp"
+        android:src="?attr/actionModeCloseDrawable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.014"
+        android:contentDescription="An image with back arraow function" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

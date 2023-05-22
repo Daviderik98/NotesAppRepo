@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 
 import com.example.notesapp_pandas.databinding.FragmentFirstBlankBinding
 import com.example.notesapp_pandas.databinding.FragmentListviewBinding
+import com.example.notesapp_pandas.databinding.ListItemBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import yuku.ambilwarna.AmbilWarnaDialog
@@ -89,6 +90,7 @@ class ListviewFragment : Fragment() {
         }
 
 
+
         notesListView.adapter = notesAdapter
 
         saveButton.setOnClickListener {
@@ -144,34 +146,33 @@ class ListviewFragment : Fragment() {
 // notesInput.text.clear()
 
             }
-            notesListView.setOnItemLongClickListener { parent, view, position, id ->
-                val item = parent.getItemAtPosition(position) as String
-                val dialogBuilder = AlertDialog.Builder(requireContext())
-                dialogBuilder.setMessage("Are you sure you want to delete this note")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes") {_, _ ->
-                        notesList.removeAt(position)
-                        notesAdapter.notifyDataSetChanged()
 
-                    }
-                    .setNegativeButton("No"){dialog, _ ->
-                        dialog.cancel()
-                    }
-                val alert = dialogBuilder.create()
-                alert.setTitle("Delete note")
-                alert.show()
-                true
-
-
-            }
-            // TODO navigate to SearchNotesFragment K & M
-            notesListView.setOnItemClickListener { parent, view, position, id->
-                val item = parent.getItemAtPosition(position) as String
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_listviewFragment_to_searchNotesFragment)
-
-            }
         }
+        notesListView.setOnItemLongClickListener { parent, view, position, id ->
+            val item = parent.getItemAtPosition(position) as String
+            val dialogBuilder = AlertDialog.Builder(requireContext())
+            dialogBuilder.setMessage("Are you sure you want to delete this note")
+                .setCancelable(false)
+                .setPositiveButton("Yes") {_, _ ->
+                    notesList.removeAt(position)
+                    notesAdapter.notifyDataSetChanged()
+
+                }
+                .setNegativeButton("No"){dialog, _ ->
+                    dialog.cancel()
+                }
+            val alert = dialogBuilder.create()
+            alert.setTitle("Delete note")
+            alert.show()
+            true
+        }
+        // TODO navigate to SearchNotesFragment K & M
+        notesListView.setOnItemClickListener { parent, view, position, id->
+            val item = parent.getItemAtPosition(position) as String
+            Navigation.findNavController(view)
+                .navigate(R.id.action_listviewFragment_to_searchNotesFragment)
+        }
+
         imageButton.setOnClickListener {
             val currentTextSize = sizePicker.value.toFloat()
             titleInput.textSize = currentTextSize
