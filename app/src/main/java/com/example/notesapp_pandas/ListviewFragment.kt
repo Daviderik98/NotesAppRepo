@@ -1,7 +1,6 @@
 package com.example.notesapp_pandas
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 
 import com.example.notesapp_pandas.databinding.FragmentFirstBlankBinding
 import com.example.notesapp_pandas.databinding.FragmentListviewBinding
@@ -50,9 +48,6 @@ class ListviewFragment : Fragment() {
         _binding = FragmentListviewBinding.inflate(layoutInflater, container, false)
         val listView = binding.root
 
-
-
-
         notesList = mutableListOf()
         textSizeList = mutableListOf()
         textColorList = mutableListOf()
@@ -67,6 +62,8 @@ class ListviewFragment : Fragment() {
         sizePicker.maxValue = 30
         sizePicker.wrapSelectorWheel = false
 
+        //notesAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, notesList)
+        //notesListView.adapter = notesAdapter
 
         notesAdapter = object : ArrayAdapter<String>(
             requireContext(),
@@ -89,7 +86,6 @@ class ListviewFragment : Fragment() {
 
 
         notesListView.adapter = notesAdapter
-
 
         saveButton.setOnClickListener {
 
@@ -121,7 +117,6 @@ class ListviewFragment : Fragment() {
                                 //notesList[uniqueId] = newObj.toString()
                                 //notesAdapter.clear()
                                 Toast.makeText(activity,"Notes saved",Toast.LENGTH_SHORT).show()
-                                fetchUserNotesFromFirebase()
 
                             }else{
                                 Toast.makeText(activity,"failed to save!",Toast.LENGTH_SHORT).show()
@@ -137,7 +132,12 @@ class ListviewFragment : Fragment() {
                         notesAdapter.notifyDataSetChanged()
                     }
                 }
+                //notesList.add(titleInput)
+                // notesList.add(bloggInput)
+                // notesAdapter.notifyDataSetChanged()
 
+// titleInput.text.clear()
+// notesInput.text.clear()
 
             }}
         imageButton.setOnClickListener {
@@ -149,42 +149,9 @@ class ListviewFragment : Fragment() {
         editBtn.setOnClickListener {
             changeColor(listView)
         }
-
-
         // Inflate the layout for this fragment
         return listView
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        fetchUserNotesFromFirebase()
-    }
-    private fun fetchUserNotesFromFirebase() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            userViewModel.notesState.collect { uiState ->
-                when (uiState) {
-                    is UiState.Loading -> {
-                        // Handle loading state
-                    }
-                    is UiState.Success -> {
-                        val notes = uiState.data
-                        updateListView(notes)
-                    }
-                    is UiState.Error -> {
-                        println("ListviewFragment Error loading notes", uiState.exception)
-                    }
-                    is UiState.Empty -> {
-                        // Handle empty state
-                    }
-                }
-            }
-        }
-    }
-
-    private fun println(s: String, exception: Exception) {
-
-    }
-
     fun changeColor(view: View) {
         val initialColor = titleInput.currentTextColor
 
@@ -204,27 +171,4 @@ class ListviewFragment : Fragment() {
             })
         colorPickerDialog.show()
     }
-    private fun updateListView(notes: List<UserNotes>) {
-        // Clear previous data
-        notesList.clear()
-        textSizeList.clear()
-        textColorList.clear()
-
-        // Add the new notes to your ListView
-        for (note in notes) {
-            val noteDisplayText = "${note.title} - ${note.blogg}"
-            notesList.add(noteDisplayText)
-
-            // You'll need to decide how you want to handle text size and color for each note
-            val textSize = 20f // Your default text size
-            val textColor = Color.BLACK // Your default text color
-
-            textSizeList.add(textSize)
-            textColorList.add(textColor)
-        }
-
-        // Notify the adapter that the data has changed
-        notesAdapter.notifyDataSetChanged()
-    }
-
 }
