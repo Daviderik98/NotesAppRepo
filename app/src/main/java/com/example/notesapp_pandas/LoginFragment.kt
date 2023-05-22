@@ -53,9 +53,6 @@ class LoginFragment : Fragment() {
                             for (userSnapshot in snapshot.children){
 
                                 val user: User? = userSnapshot.getValue(User::class.java)
-                                //Pro-tip don´t confuse snapShot with userSnapshot
-                                //val anteckningarMap: Map<String, UserNotes>? = user?.anteckningar
-
 
                                 if (user != null && user.password == inputPassword){
                                     println("SECOND CHANCE TO TURN BACK?!")
@@ -72,18 +69,8 @@ class LoginFragment : Fragment() {
                                     if (currentUser != null) {
                                         println(currentUser.username)
                                     }
-                                    //val anteckningarList: List<UserNotes>? = anteckningarMap?.values?.toList()
-                                    //val anteckningarList = mutableListOf<UserNotes>()
-                                    //val anteckningarSnapshot = userSnapshot.child("anteckningar")
 
-                                    // for (noteSnapshot in anteckningarSnapshot.children) {
-                                    //  val note = noteSnapshot.getValue(UserNotes::class.java)
-                                    //  if (note != null) {
-                                    //     anteckningarList.add(note)
-                                    //   }
-                                    // }
 
-                                    //userViewModel.getCurrentUser(currentUser)
                                     Navigation.findNavController(loginView).navigate(R.id.action_loginFragment_to_listviewFragment)
                                 }
                             }
