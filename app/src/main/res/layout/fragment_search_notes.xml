@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5B8BC34A"
+    tools:context=".SearchNotesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SearchView
+            android:id="@+id/et_searchTitle"
+            android:layout_width="266dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/img_checkTitle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_searchHeaderText"
+            app:layout_constraintTop_toBottomOf="@+id/tv_searchHeaderText" />
+
+        <TextView
+            android:id="@+id/tv_searchHeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Type in title to search your note"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="@+id/img_panda"
+            app:layout_constraintStart_toStartOf="@+id/img_panda"
+            app:layout_constraintTop_toBottomOf="@+id/img_panda" />
+
+        <ImageView
+            android:id="@+id/img_panda"
+            android:layout_width="225dp"
+            android:layout_height="202dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/cf45d9f5_2172_4009_8797_e2fcaad2a5b9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.03" />
+
+        <ImageView
+            android:id="@+id/img_checkTitle"
+            android:layout_width="69dp"
+            android:layout_height="60dp"
+            android:src="@drawable/icons8_checkmark_69"
+            app:layout_constraintBottom_toBottomOf="@+id/et_searchTitle"
+            app:layout_constraintEnd_toEndOf="@+id/tv_searchHeaderText"
+            app:layout_constraintTop_toTopOf="@+id/et_searchTitle" />
+
+        <ImageButton
+            android:id="@+id/img_arrowGoToListview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:background="@color/teal_200"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:src="?attr/actionModeCloseDrawable"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.061" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
