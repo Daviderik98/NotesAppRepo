@@ -23,20 +23,20 @@ import yuku.ambilwarna.AmbilWarnaDialog
 
 class ListviewFragment : Fragment() {
 
-    private lateinit var notesList: MutableList<String>
+    private lateinit var notesList: MutableList<UserNotes>
     private lateinit var textSizeList: MutableList<Float>
     private lateinit var textColorList: MutableList<Int>
     private lateinit var notesListView: ListView
-    private lateinit var notesAdapter: ArrayAdapter<String>
+    private lateinit var notesAdapter: NotesAdapter
     private lateinit var notesInput: EditText
     private lateinit var titleInput: EditText
     private lateinit var saveButton: Button
     private lateinit var imageButton: ImageView
     private lateinit var sizePicker: NumberPicker
+    private lateinit var currentUser: User
+    private lateinit var db: DatabaseReference
 
-    private val db: DatabaseReference =
-        FirebaseDatabase.getInstance("https://database-pandanotes-default-rtdb.europe-west1.firebasedatabase.app/")
-            .getReference("Users")
+
 
     private var _binding: FragmentListviewBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +53,11 @@ class ListviewFragment : Fragment() {
         _binding = FragmentListviewBinding.inflate(layoutInflater, container, false)
         val listView = binding.root
 
-        notesList = mutableListOf()
+        notesList = mutableListOf<UserNotes>()
+        db = FirebaseDatabase.getInstance("https://database-pandanotes-default-rtdb.europe-west1.firebasedatabase.app/")
+            .getReference("Users")
+        currentUser = userViewModel.currentUser.value ?: return listView
+        notesAdapter = NotesAdapter(requireContext(), notesList, db, currentUser)
         textSizeList = mutableListOf()
         textColorList = mutableListOf()
         notesListView = binding.notesList
@@ -70,24 +74,7 @@ class ListviewFragment : Fragment() {
         //notesAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, notesList)
         //notesListView.adapter = notesAdapter
 
-        notesAdapter = object : ArrayAdapter<String>(
-            requireContext(),
-            R.layout.list_item,
-            R.id.item_text_note,
-            notesList
-        ) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent)
-                val titleTextView = view.findViewById<TextView>(R.id.item_text_note)
 
-                val textSize = textSizeList[position]
-                val textColor = textColorList[position]
-                titleTextView.textSize = textSize
-                titleTextView.setTextColor(textColor)
-
-                return view
-            }
-        }
 
 
 
@@ -113,8 +100,14 @@ class ListviewFragment : Fragment() {
             if (titlesInput.isNotEmpty()&& bloggInput.isNotEmpty()){
                 val uniqueId: String? = currentUser?.let { it1 -> db.child(it1.userId).child("anteckningar").push().key }
                     ?: ""
+                val textSize = sizePicker.value.toFloat()
+                val textColor = titleInput.currentTextColor
 
-                val newObj = uniqueId?.let { it1 -> UserNotes(title = titlesInput, blogg = bloggInput, uniqueID = it1) }
+                val newObj = uniqueId?.let { it1 -> UserNotes(title = titlesInput, blogg = bloggInput, uniqueID = it1, textSize = sizePicker.value.toFloat(),
+                textColor = titleInput.currentTextColor) }
+                if (newObj != null) {
+                    notesList.add(newObj)
+                }
 
                 if (currentUser != null) {
                     if (uniqueId != null) {
@@ -130,7 +123,7 @@ class ListviewFragment : Fragment() {
 
                         }
                         val noteDisplayText = "$titlesInput - $bloggInput"
-                        notesList.add(noteDisplayText)
+
                         val textSize = sizePicker.value.toFloat()
                         val textColor = titleInput.currentTextColor
                         textSizeList.add(textSize)
@@ -148,30 +141,8 @@ class ListviewFragment : Fragment() {
             }
 
         }
-        notesListView.setOnItemLongClickListener { parent, view, position, id ->
-            val item = parent.getItemAtPosition(position) as String
-            val dialogBuilder = AlertDialog.Builder(requireContext())
-            dialogBuilder.setMessage("Are you sure you want to delete this note")
-                .setCancelable(false)
-                .setPositiveButton("Yes") {_, _ ->
-                    notesList.removeAt(position)
-                    notesAdapter.notifyDataSetChanged()
 
-                }
-                .setNegativeButton("No"){dialog, _ ->
-                    dialog.cancel()
-                }
-            val alert = dialogBuilder.create()
-            alert.setTitle("Delete note")
-            alert.show()
-            true
-        }
-        // TODO navigate to SearchNotesFragment K & M
-        notesListView.setOnItemClickListener { parent, view, position, id->
-            val item = parent.getItemAtPosition(position) as String
-            Navigation.findNavController(view)
-                .navigate(R.id.action_listviewFragment_to_searchNotesFragment)
-        }
+
 
         imageButton.setOnClickListener {
             val currentTextSize = sizePicker.value.toFloat()
@@ -251,20 +222,21 @@ class ListviewFragment : Fragment() {
     private fun updateListView(notes: List<UserNotes>) {
         // Clear previous data
         notesList.clear()
-        textSizeList.clear()
-        textColorList.clear()
+        //textSizeList.clear()
+        //textColorList.clear()
 
         // Add the new notes to your ListView
         for (note in notes) {
-            val noteDisplayText = "${note.title} - ${note.blogg}"
-            notesList.add(noteDisplayText)
+            notesList.add(note)
+          //  val noteDisplayText = "${note.title} - ${note.blogg}"
+            //notesList.add(noteDisplayText)
 
             // You'll need to decide how you want to handle text size and color for each note
-            val textSize = 20f // Your default text size
-            val textColor = Color.BLACK // Your default text color
+            //val textSize = 20f // Your default text size
+            //val textColor = Color.BLACK // Your default text color
 
-            textSizeList.add(textSize)
-            textColorList.add(textColor)
+           // textSizeList.add(textSize)
+           // textColorList.add(textColor)
         }
 
         // Notify the adapter that the data has changed
