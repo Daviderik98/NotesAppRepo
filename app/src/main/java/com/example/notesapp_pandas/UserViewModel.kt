@@ -28,6 +28,7 @@ class UserViewModel: ViewModel() {
         if (user != null) {
             fetchNotes(user.userId)
         }
+
     }
 
     private val _notesState = MutableStateFlow<UiState<List<UserNotes>>>(UiState.Empty)
@@ -51,7 +52,11 @@ class UserViewModel: ViewModel() {
                 _notesState.value = UiState.Error(Exception("No notes found for the user"))
             }
         }
+
     }
+
+
+
 }
 
 
