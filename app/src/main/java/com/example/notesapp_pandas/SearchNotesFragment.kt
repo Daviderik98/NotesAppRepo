@@ -32,8 +32,8 @@ class SearchNotesFragment : Fragment() {
 
         val goBackToListview = binding.imgArrowGoToListview
         goBackToListview.setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_searchNotesFragment_to_listviewFragment)
+        //    Navigation.findNavController(view)
+          //      .navigate(R.id.action_searchNotesFragment_to_listviewFragment)
         }
 
 
